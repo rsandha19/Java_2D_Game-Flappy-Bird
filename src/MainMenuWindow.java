@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainMenuWindow extends JPanel {
     private Image background;
@@ -34,6 +36,11 @@ public class MainMenuWindow extends JPanel {
         shopButton.setBounds(185,200,180,180);
         shopButton.setBorderPainted(false);
         shopButton.setContentAreaFilled(false);
+        shopButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                FrameManager.switchTo(new ShopWindow());
+            }
+        });
 
         JButton startButton=new JButton(startButtonIcon);
         startButton.setBounds(165,355,240,160);

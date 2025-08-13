@@ -156,7 +156,7 @@ public void move(){
         Sound.playCollision();
         isDead=true;
         if(!multiplayer) {
-            //FrameManager.switchTo(new GameEnd(0,score));
+            FrameManager.switchTo(new GameEnd(false,score));
             initialPoints=initialPoints+score;
             point.setPoints(initialPoints);
             score=0;
