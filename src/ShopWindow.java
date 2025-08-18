@@ -5,81 +5,179 @@ import java.awt.event.ActionListener;
 
 public class ShopWindow extends JPanel {
 
-    private int balance;
-    private Image background;
-    private Image shopLogo;
-    private Image equipped;
-    private Image bird1;
-    private Image bird2;
-    private Image bird3;
-    private ImageIcon backButtonIcon;
-    private ImageIcon buyIcon;
-    private ImageIcon equipIcon;
+    private final int
+            balance;
+    private final Image background;
+    private final Image shopLogo;
+    private final Image equipped;
+    private final Image bird1;
+    private final Image bird2;
+    private final Image bird3;
 
 
-    private boolean ownBird1;
-    private boolean ownBird2;
-    private boolean ownBird3;
-    private int costBird1=500;
-    private int costBird2=2000;
-    private int costBird3=10000;
+    private final Skins skins= new Skins();
+    private final EquippedSkin eq=new EquippedSkin();
 
-    private Skins skins= new Skins();
-    private Points points=new Points();
-    private EquippedSkin eq=new EquippedSkin();
-    private int EquippedIndex;
-    public ShopWindow(){
+    public ShopWindow() {
 
-        balance=points.getPoints();
-        setPreferredSize(new Dimension(550,700));
+        Points points = new Points();
+        balance = points.getPoints();
+        setPreferredSize(new Dimension(550, 700));
         setLayout(null);
-        String linkBG="resources/images/shopBG.png";
-        background=new ImageIcon(linkBG).getImage();
+        String linkBG = "resources/images/shopBG.png";
+        background = new ImageIcon(linkBG).getImage();
 
-        String birdLink ="resources/images/birdFP.png";
+        String birdLink = "resources/images/birdFP.png";
         equipped = new ImageIcon(birdLink).getImage();
 
-        String bird1Link=new String("resources/images/bird1.png");
-        bird1=new ImageIcon(bird1Link).getImage();
+        String bird1Link = "resources/images/bird1.png";
+        bird1 = new ImageIcon(bird1Link).getImage();
 
-        String bird2Link=new String("resources/images/bird2.png");
-        bird2=new ImageIcon(bird2Link).getImage();
+        String bird2Link = "resources/images/bird2.png";
+        bird2 = new ImageIcon(bird2Link).getImage();
 
-        String bird3Link=new String("resources/images/bird3.png");
-        bird3=new ImageIcon(bird3Link).getImage();
+        String bird3Link = "resources/images/bird3.png";
+        bird3 = new ImageIcon(bird3Link).getImage();
 
-        shopLogo=new ImageIcon(new String("resources/images/shopLogo.png")).getImage();
-        buyIcon=new ImageIcon(new String("resources/images/buy.png"));
-        String backButtonLink=new String("resources/images/back.png");
-        backButtonIcon=new ImageIcon(backButtonLink);
+        shopLogo = new ImageIcon("resources/images/shopLogo.png").getImage();
+        ImageIcon buyIcon = new ImageIcon("resources/images/buy.png");
+        String backButtonLink = "resources/images/back.png";
+        ImageIcon backButtonIcon = new ImageIcon(backButtonLink);
 
-        JButton buyButton=new JButton(buyIcon);
+        JButton buyButton = new JButton(buyIcon);
         buyButton.setBorderPainted(false);
         buyButton.setContentAreaFilled(false);
-        buyButton.setBounds(240,280,140,60);
+        buyButton.setBounds(240, 280, 140, 60);
         buyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 skins.buyBird1();
-                FrameManager.switchTo(new MainMenuWindow());
+                FrameManager.switchTo(new MainMenuWindow(550, 700));
             }
         });
 
         JButton buyButton2 = new JButton(buyIcon);
         buyButton2.setContentAreaFilled(false);
         buyButton2.setBorderPainted(false);
-        buyButton2.setBounds(240,410,140,60);
-        buyButton2.addActionListener(new ActionListener(){
+        buyButton2.setBounds(240, 410, 140, 60);
+        buyButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent h) {
                 skins.buyBird2();
-                FrameManager.switchTo(new MainMenuWindow());
+                FrameManager.switchTo(new MainMenuWindow(550, 700));
+            }
+        });
+
+        JButton buyButton3 = new JButton(buyIcon);
+        buyButton3.setContentAreaFilled(false);
+        buyButton3.setBorderPainted(false);
+        buyButton3.setBounds(240, 540, 140, 60);
+        buyButton3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent d) {
+                skins.buyBird3();
+                FrameManager.switchTo(new MainMenuWindow(550, 700));
+            }
+        });
+
+        ImageIcon equipIcon = new ImageIcon(new String("resources/images/equip.png"));
+
+        JButton equipButton = new JButton(equipIcon);
+        equipButton.setBorderPainted(false);
+        equipButton.setContentAreaFilled(false);
+        equipButton.setBounds(240, 150, 200, 80);
+        equipButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent t) {
+                eq.equipSkin(0);
+                FrameManager.switchTo(new MainMenuWindow(550, 700));
+
+            }
+        });
+        JButton equipButton2 = new JButton(equipIcon);
+        equipButton2.setContentAreaFilled(false);
+        equipButton2.setBorderPainted(false);
+        equipButton2.setBounds(240, 280, 200, 80);
+        equipButton2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent t) {
+                eq.equipSkin(1);
+                FrameManager.switchTo(new MainMenuWindow(550, 700));
+
             }
         });
 
 
+        JButton equipButton3 = new JButton(equipIcon);
+        equipButton3.setContentAreaFilled(false);
+        equipButton3.setBorderPainted(false);
+        equipButton3.setBounds(240, 410, 200, 80);
+        equipButton3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent t) {
+                eq.equipSkin(2);
+                FrameManager.switchTo(new MainMenuWindow(550, 700));
 
+            }
+        });
+
+
+        JButton equipButton4 = new JButton(equipIcon);
+        equipButton4.setContentAreaFilled(false);
+        equipButton4.setBorderPainted(false);
+        equipButton4.setBounds(240, 540, 200, 80);
+        equipButton4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent t) {
+                eq.equipSkin(3);
+                FrameManager.switchTo(new MainMenuWindow(550, 700));
+
+            }
+        });
+
+
+        JButton backButton = new JButton(backButtonIcon);
+        backButton.setContentAreaFilled(false);
+        backButton.setBorderPainted(false);
+        backButton.setBounds(5,5,100,100);
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                FrameManager.switchTo(new MainMenuWindow(550,700));
+            }
+        });
+        add(backButton);
+
+        if(skins.bird1Status()==0) {
+            add(buyButton);
+        }else {
+            add(equipButton2);
+        }
+        if(skins.bird2Status()==0) {
+            add(buyButton2);
+
+        }else {
+            add(equipButton3);
+        }
+        if(skins.bird3Status()==0) {
+            add(buyButton3);
+        }else {
+            add(equipButton4);
+        }
+
+        add(equipButton);
 
     }
-
-
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        g.drawImage(background,0,0,550,700,this);
+        g.drawImage(equipped,90,140,80,80,this);
+        g.drawImage(bird1,90,250,100,100,this);
+        g.drawImage(bird2,90,380,100,100,this);
+        g.drawImage(bird3,90,510,100,100,this);
+        g.drawImage(shopLogo,50,-120,500,400,this);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.BOLD, 20));
+        int costBird1 = 500;
+        g.drawString("COST : " + costBird1, 80, 360);
+        int costBird2 = 2000;
+        g.drawString("COST : " + costBird2, 80, 490);
+        int costBird3 = 10000;
+        g.drawString("COST : " + costBird3, 80, 620);
+        g.setFont(new Font("Arial", Font.BOLD, 36));
+        g.drawString("Balance : " +balance, 150, 650);
+    }
 
 }

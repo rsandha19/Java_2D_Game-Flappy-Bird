@@ -12,4 +12,8 @@ public class Bird {
 EquippedSkin eq=new EquippedSkin();
 birdImage=eq.getCurrentSkin();
     }
+    public void reloadSkin() {
+        EquippedSkin eq = new EquippedSkin();
+        birdImage = eq.getCurrentSkin();
+    }
 }

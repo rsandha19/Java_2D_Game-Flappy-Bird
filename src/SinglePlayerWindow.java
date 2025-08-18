@@ -10,7 +10,7 @@ import java.util.Random;
 public class SinglePlayerWindow extends JPanel implements ActionListener, KeyListener {
 
     private final Image background;
-    private final Image birdSkin;
+    private Image birdSkin;
     private final Image topPipe;
     private final Image bottomPipe;
 
