@@ -58,7 +58,13 @@ public class MainMenuWindow extends JPanel {
         multiplayerButton.setBounds(75,530,400,100);
         multiplayerButton.setBorderPainted(false);
         multiplayerButton.setContentAreaFilled(false);
-
+multiplayerButton.addActionListener( new ActionListener(){
+    public void actionPerformed(ActionEvent g)
+{
+    FrameManager.switchTo(new MultiplyerWindow());
+FrameManager.F.pack();
+FrameManager.F.setLocationRelativeTo(null);}
+});
 
         // add buttons onto the panel
         add(startButton);

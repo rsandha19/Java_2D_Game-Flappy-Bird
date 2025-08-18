@@ -19,7 +19,6 @@ public class SinglePlayerWindow extends JPanel implements ActionListener, KeyLis
     private Image bird3;
 
     boolean isDead =false;
-boolean isMultiplayerPlayer1=false;
 boolean isMultiplayer=false;
 
 
@@ -62,6 +61,8 @@ boolean isMultiplayer=false;
 
     SinglePlayerWindow(int i){if(i==1){
         isMultiplayer=true;
+    }else{
+        isMultiplayer=false;
     }
     initialPoints=points.getPoints();
 
@@ -144,9 +145,7 @@ public void paintComponent(Graphics g){
  public void actionPerformed(ActionEvent e){
     move();
     repaint();
-    if(isDead) {
-        return;
-    }
+
 }
 public void restartGameLoop(){
     if(gameLoop!=null) gameLoop.start();
@@ -169,7 +168,7 @@ public void move(){
     // changing location of each pipe and removing them from array when not needed
     for(int i=pipes.size()-1;i>=0;i--) {
         Pipe p =pipes.get(i);
-        int velocityHorizontal = -3;
+        int velocityHorizontal = -2;
         p.pipeX+= velocityHorizontal;
         if (!p.passed && birdX> p.pipeX + p.pipeWidth) {
             p.passed = true;
@@ -188,15 +187,15 @@ public void move(){
 
         if (withinPipeX && (hitTopPipe || hitBottomPipe)) {
             gameOver();
-            return;
         }
     }
 }
 
     public void gameOver() {
+        isDead=true;
+
         disableGame();
         sounds.playCollision();
-        isDead=true;
         if(!isMultiplayer) {
             FrameManager.switchTo(new GameEnd(false,score));
             initialPoints=initialPoints+score;
