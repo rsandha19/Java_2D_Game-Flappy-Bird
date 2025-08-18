@@ -9,13 +9,20 @@ import java.util.Random;
 
 public class SinglePlayerWindow extends JPanel implements ActionListener, KeyListener {
 
-    private final Image background;
+    private  Image background;
     private Image birdSkin;
-    private final Image topPipe;
-    private final Image bottomPipe;
+    private  Image topPipe;
+    private Image bottomPipe;
+
+    private Image bird1;
+    private Image bird2;
+    private Image bird3;
 
     boolean isDead =false;
-boolean multiplayer=false;
+boolean isMultiplayerPlayer1=false;
+boolean isMultiplayer=false;
+
+
     private int initialPoints;
     private int score=0;
 
@@ -26,36 +33,72 @@ boolean multiplayer=false;
     private final int panelHeight=700;
     private final int panelWidth=550;
 
+    private int birdWidth=55;
+    private int birdHeight=55;
+    private int birdX=panelWidth/5;
+    private int birdY=panelHeight/3;
+
+    private double birdHead;
+    private double birdFoot;
+
+    private int verticalVelocity;
+    private int gravity=7;
+    private int jump=-50;
     private int center=300;
+    private int velocityX=-4;
+    {
+        verticalVelocity = -5;
+    }
 
 
-    private final Timer gameLoop;
-    private final Timer pipeTimer ;
+    private Timer gameLoop;
+    private Timer pipeTimer ;
 
- private final ArrayList<Pipe> Pipes = new ArrayList<>();
- Bird bird=new Bird();
-Points point=new Points();
+    private Equipped eq=new Equipped();
+    private Sound sounds=new Sound();
+    private Points points=new Points();
 
-    SinglePlayerWindow(){
-    initialPoints=point.getPoints();
+ private final ArrayList<Pipe> pipes = new ArrayList<>();
+
+    SinglePlayerWindow(int i){if(i==1){
+        isMultiplayer=true;
+    }
+    initialPoints=points.getPoints();
 
     setPreferredSize(new Dimension(panelWidth,panelHeight));
     setFocusable(true);
     requestFocusInWindow();
     addKeyListener(this);
 
-    String backgroundLink = "resources/images/finalBG.png";
-background=new ImageIcon(backgroundLink).getImage();
+        // creating links and importing image objects.
+        String backGroundLink= "resources/images/finalBG.png";
+        String birdLink= "resources/images/birdFP.png";
+        String topPipeLink= "resources/images/Top_pipe.png";
+        String bottomPipeLink = "resources/images/bottom_pipe.png";
 
-birdSkin=bird.birdImage;
+        // loading images
 
-String TopPipeLink= "resources/images/Top_pipe.png";
-topPipe=new ImageIcon(TopPipeLink).getImage();
+        String bird1Link= "resources/images/bird1.png";
+        bird1=new ImageIcon(bird1Link).getImage();
+        String bird2Link= "resources/images/bird2.png";
+        bird2=new ImageIcon(bird2Link).getImage();
+        String bird3Link= "resources/images/bird3.png";
+        bird3=new ImageIcon(bird3Link).getImage();
+        topPipe=new ImageIcon(topPipeLink).getImage();
+        bottomPipe=new ImageIcon(bottomPipeLink).getImage();
+        background=new ImageIcon(backGroundLink).getImage();
 
-String BottomPipeLink= "resources/images/bottom_pipe.png";
-bottomPipe=new ImageIcon(BottomPipeLink).getImage();
 
-gameLoop=new Timer(1000/60,this);
+        if(eq.getEquippedIndex()==0){
+            birdSkin=new ImageIcon(birdLink).getImage();
+        }else if(eq.getEquippedIndex()==1){
+            birdSkin=bird1;
+        }else if(eq.getEquippedIndex()==2){
+            birdSkin=bird2;
+        }else{
+            birdSkin=bird3;
+        }
+        gameLoop=new Timer(1000/60,this);
 gameLoop.start();
 
 pipeTimer=new javax.swing.Timer(1500, _ ->placePipes()) ;
@@ -79,22 +122,20 @@ public void placePipes(){
     int gapLoc = rand.nextInt(max-min+1)+min;
     center=gapLoc;
     Pipe pipe=new Pipe(topPipe,bottomPipe,gapLoc);
-    Pipes.add(pipe);
+    pipes.add(pipe);
 
 }
 
 public void paintComponent(Graphics g){
     super.paintComponent(g);
     g.drawImage(background,0,0,panelWidth,panelHeight,this);
-    g.drawImage(birdSkin, bird.birdXLoc, bird.birdYLoc- bird.birdHeight/2,bird.birdWidth,bird.birdHeight,this );
+    g.drawImage(birdSkin, birdX, birdY-birdHeight/2,birdWidth,birdHeight,this );
 
-    for (Pipe pipe : Pipes) {
-        if (pipe.pipeX + pipe.pipeWidth > 0) {
-            g.drawImage(pipe.bottomPipe, pipe.pipeX, pipe.pipeBottomY, pipe.pipeWidth, pipe.pipeBottomHeight, this);
-            g.drawImage(pipe.topPipe, pipe.pipeX, pipe.pipeTopY, pipe.pipeWidth, pipe.pipeTopHeight, this);
+    for(int i=0;i<pipes.size();i++) { if(pipes.get(i).pipeX+pipes.get(i).pipeWidth>0){
+        g.drawImage(pipes.get(i).bottomPipe,pipes.get(i).pipeX,pipes.get(i).pipeBottomY,pipes.get(i).pipeWidth,pipes.get(i).pipeBottomHeight,this);
+        g.drawImage(pipes.get(i).topPipe,pipes.get(i).pipeX,pipes.get(i).pipeTopY,pipes.get(i).pipeWidth,pipes.get(i).pipeTopHeight,this);
 
-        }
-    }
+    }}
     // score
 			g.setFont(scoreFont);
 			g.setColor(scoreColor);
@@ -103,8 +144,9 @@ public void paintComponent(Graphics g){
  public void actionPerformed(ActionEvent e){
     move();
     repaint();
-    if(isDead)return;
-
+    if(isDead) {
+        return;
+    }
 }
 public void restartGameLoop(){
     if(gameLoop!=null) gameLoop.start();
@@ -117,32 +159,32 @@ public void disableGame(){
 }
 public void move(){
     int verticalVelocity = -5;
-    bird.birdYLoc=bird.birdYLoc+ verticalVelocity;
+    birdY=birdY+ verticalVelocity;
     int gravity = 7;
-    bird.birdYLoc= bird.birdYLoc+ gravity;
-    bird.birdYLoc=Math.max(bird.birdYLoc,0);
-    bird.birdYLoc=Math.min(bird.birdYLoc,645);
-    bird.birdHead=bird.birdYLoc-((double) bird.birdHeight /2);
-    bird.birdFoot=bird.birdYLoc+((double) bird.birdHeight /2);
+    birdY=birdY+ gravity;
+    birdY=Math.max(birdY,0);
+    birdY=Math.min(birdY,645);
+    birdHead=birdY-((double)birdHeight /2);
+    birdFoot=birdY+((double)birdHeight /2);
     // changing location of each pipe and removing them from array when not needed
-    for(int i=Pipes.size()-1;i>=0;i--) {
-        Pipe p =Pipes.get(i);
+    for(int i=pipes.size()-1;i>=0;i--) {
+        Pipe p =pipes.get(i);
         int velocityHorizontal = -3;
         p.pipeX+= velocityHorizontal;
-        if (!p.passed && bird.birdXLoc > p.pipeX + p.pipeWidth) {
+        if (!p.passed && birdX> p.pipeX + p.pipeWidth) {
             p.passed = true;
             score++;
         }
         if(p.pipeX+p.pipeWidth<0) {
-            Pipes.remove(i);
+            pipes.remove(i);
         }
         // checking for collision here with movement
         int marginX = 6;
         int marginY = 6;
-        boolean withinPipeX = (bird.birdXLoc + marginX) + (bird.birdWidth - 2 * marginX) > p.pipeX
-                && (bird.birdXLoc + marginX) < (p.pipeX + p.pipeWidth);
-        boolean hitTopPipe = (bird.birdHead + marginY) < p.pipeTopHeight;
-        boolean hitBottomPipe = (bird.birdFoot - marginY) > p.pipeBottomY;
+        boolean withinPipeX = (birdX + marginX) + (birdWidth - 2 * marginX) > p.pipeX
+                && (birdX + marginX) < (p.pipeX + p.pipeWidth);
+        boolean hitTopPipe = (birdHead + marginY) < p.pipeTopHeight;
+        boolean hitBottomPipe = (birdFoot - marginY) > p.pipeBottomY;
 
         if (withinPipeX && (hitTopPipe || hitBottomPipe)) {
             gameOver();
@@ -153,18 +195,18 @@ public void move(){
 
     public void gameOver() {
         disableGame();
-        Sound.playCollision();
+        sounds.playCollision();
         isDead=true;
-        if(!multiplayer) {
+        if(!isMultiplayer) {
             FrameManager.switchTo(new GameEnd(false,score));
             initialPoints=initialPoints+score;
-            point.setPoints(initialPoints);
+            points.setPoints(initialPoints);
             score=0;
             FrameManager.F.setSize(550,700);}
     }
     public void jumpAction() {
         int jump = -50;
-        bird.birdYLoc=bird.birdYLoc+ jump;
+        birdY=birdY+ jump;
         Sound.playJumpSound();
     }
     public void keyPressed(KeyEvent e) {

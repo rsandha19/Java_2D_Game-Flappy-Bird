@@ -1,5 +1,5 @@
 import java.awt.*;
-
+/*
 public class Bird {
      Image birdImage;
      int birdWidth=55;
@@ -17,3 +17,4 @@ birdImage=eq.getCurrentSkin();
         birdImage = eq.getCurrentSkin();
     }
 }
+*/

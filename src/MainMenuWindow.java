@@ -10,24 +10,26 @@ public class MainMenuWindow extends JPanel {
     private ImageIcon multiplayerButtonIcon;
     private Image welcomeLogo;
 
-    MainMenuWindow(int width,int height){
-        setPreferredSize(new Dimension(width,height));
+    private int OPTION_CHOSEN=0;
+    MainMenuWindow(){
+        setPreferredSize(new Dimension(550,700));
         setLayout(null);
 
         // load images and resources
-        String backgroundLink=new String("resources/Main_menu/finalBG.png");
+        String backgroundLink= "resourc" +
+                "es/Main_menu/finalBG.png";
         background = new ImageIcon(backgroundLink).getImage();
 
-        String shopButtonLink=new String("resources/Main_menu/shop.png");
+        String shopButtonLink= "resources/Main_menu/shop.png";
         shopButtonIcon=new ImageIcon(shopButtonLink);
 
-        String startButtonLink=new String("resources/Main_menu/start.png");
+        String startButtonLink= "resources/Main_menu/start.png";
         startButtonIcon=new ImageIcon(startButtonLink);
 
-        String multiplayerButtonLink=new String("resources/Main_menu/multiplayer.png");
+        String multiplayerButtonLink= "resources/Main_menu/multiplayer.png";
         multiplayerButtonIcon=new ImageIcon(multiplayerButtonLink);
 
-        String welcomeLink = new String("resources/Main_menu/welcome.png");
+        String welcomeLink = "resources/Main_menu/welcome.png";
                 welcomeLogo=new ImageIcon(welcomeLink).getImage();
 
         // creating each button
@@ -48,7 +50,7 @@ public class MainMenuWindow extends JPanel {
         startButton.setBorderPainted(false);
         startButton.addActionListener(e -> {
 
-            FrameManager.switchTo(new SinglePlayerWindow());
+            FrameManager.switchTo(new SinglePlayerWindow(0));
         });
 
 
@@ -69,5 +71,8 @@ public class MainMenuWindow extends JPanel {
         g.drawImage(background,0,0,550,700,this);
         g.drawImage(welcomeLogo,125,30,300,200,this);
 
+    }
+    public int getOption(){
+        return OPTION_CHOSEN;
     }
 }

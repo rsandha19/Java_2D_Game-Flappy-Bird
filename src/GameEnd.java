@@ -47,7 +47,7 @@ public class GameEnd extends JPanel {
         playAgainButton.setBorderPainted(false);
         playAgainButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent h) {
-                FrameManager.switchTo(new SinglePlayerWindow());
+                FrameManager.switchTo(new SinglePlayerWindow(0));
             }
         });
 
@@ -57,7 +57,7 @@ public class GameEnd extends JPanel {
         mainMenuButton.setBorderPainted(false);
         mainMenuButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent g) {
-                FrameManager.switchTo(new MainMenuWindow(550,700));
+                FrameManager.switchTo(new MainMenuWindow());
             }
         });
 

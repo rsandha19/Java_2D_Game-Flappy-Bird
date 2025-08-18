@@ -5,18 +5,18 @@ import java.awt.event.ActionListener;
 
 public class ShopWindow extends JPanel {
 
-    private final int
+    private int
             balance;
-    private final Image background;
-    private final Image shopLogo;
-    private final Image equipped;
-    private final Image bird1;
-    private final Image bird2;
-    private final Image bird3;
+    private Image background;
+    private Image shopLogo;
+    private Image equipped;
+    private Image bird1;
+    private Image bird2;
+    private Image bird3;
 
 
-    private final Skins skins= new Skins();
-    private final EquippedSkin eq=new EquippedSkin();
+    private Skins skins= new Skins();
+    private Equipped eq=new Equipped();
 
     public ShopWindow() {
 
@@ -51,7 +51,7 @@ public class ShopWindow extends JPanel {
         buyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 skins.buyBird1();
-                FrameManager.switchTo(new MainMenuWindow(550, 700));
+                FrameManager.switchTo(new MainMenuWindow());
             }
         });
 
@@ -62,7 +62,7 @@ public class ShopWindow extends JPanel {
         buyButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent h) {
                 skins.buyBird2();
-                FrameManager.switchTo(new MainMenuWindow(550, 700));
+                FrameManager.switchTo(new MainMenuWindow());
             }
         });
 
@@ -73,7 +73,7 @@ public class ShopWindow extends JPanel {
         buyButton3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent d) {
                 skins.buyBird3();
-                FrameManager.switchTo(new MainMenuWindow(550, 700));
+                FrameManager.switchTo(new MainMenuWindow());
             }
         });
 
@@ -86,7 +86,7 @@ public class ShopWindow extends JPanel {
         equipButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent t) {
                 eq.equipSkin(0);
-                FrameManager.switchTo(new MainMenuWindow(550, 700));
+                FrameManager.switchTo(new MainMenuWindow());
 
             }
         });
@@ -97,7 +97,7 @@ public class ShopWindow extends JPanel {
         equipButton2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent t) {
                 eq.equipSkin(1);
-                FrameManager.switchTo(new MainMenuWindow(550, 700));
+                FrameManager.switchTo(new MainMenuWindow());
 
             }
         });
@@ -110,7 +110,7 @@ public class ShopWindow extends JPanel {
         equipButton3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent t) {
                 eq.equipSkin(2);
-                FrameManager.switchTo(new MainMenuWindow(550, 700));
+                FrameManager.switchTo(new MainMenuWindow());
 
             }
         });
@@ -123,7 +123,7 @@ public class ShopWindow extends JPanel {
         equipButton4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent t) {
                 eq.equipSkin(3);
-                FrameManager.switchTo(new MainMenuWindow(550, 700));
+                FrameManager.switchTo(new MainMenuWindow());
 
             }
         });
@@ -135,7 +135,7 @@ public class ShopWindow extends JPanel {
         backButton.setBounds(5,5,100,100);
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
-                FrameManager.switchTo(new MainMenuWindow(550,700));
+                FrameManager.switchTo(new MainMenuWindow());
             }
         });
         add(backButton);

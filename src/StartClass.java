@@ -27,7 +27,7 @@ public class StartClass {
         FrameManager.F= baseFrame;
 
         // now move to the main menu window;
-        FrameManager.switchTo(new MainMenuWindow(width,height));
+        FrameManager.switchTo(new MainMenuWindow());
 
         baseFrame.pack();
         baseFrame.setVisible(true);
